@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Estilos-->
+    <link rel="stylesheet", href="css/estilos.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/tabla.css">
+    <!--firebase-->
+    <!--<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>-->
+    <script src="/__/firebase/7.7.0/firebase-app.js"></script>
+    <script src="/__/firebase/7.7.0/firebase-firestore.js"></script>
+    <script src="/__/firebase/7.7.0/firebase-auth.js"></script>
+    
+    <script type="text/javascript">
+        initApp = function () {
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (user) {
+                    // User is signed in.
+                    var displayName = user.displayName;
+                    var email = user.email;
+                    var emailVerified = user.emailVerified;
+                    var photoURL = user.photoURL;
+                    var uid = user.uid;
+                    var phoneNumber = user.phoneNumber;
+                    var providerData = user.providerData;
+                    user.getIdToken().then(function (accessToken) {
+
+                        document.getElementById('actual').textContent = JSON.stringify({
+                            displayName: displayName,
+                            email: email,
+                            emailVerified: emailVerified,
+                            phoneNumber: phoneNumber,
+                            photoURL: photoURL,
+                            uid: uid,
+                            accessToken: accessToken,
+                            providerData: providerData
+                        }, null, '  ');
+                        document.getElementById('actual').textContent = email;
+                    });
+                } else {
+                    // User is signed out.
+                    document.getElementById('actual').textContent = 'Signed out';
+                    document.getElementById('actual').textContent = 'Sign in';
+                    document.getElementById('actual').textContent = 'null';
+                }
+            }, function (error) {
+                console.log(error);
+            });
+        };
+
+        window.addEventListener('load', function () {
+            initApp();
+        });
+    </script>
+    <title>Directorio Personal Técnico - Empleados</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <nav class="menu-main">
+        <a href="index.html">Inicio</a>
+        <a class="active" href="mantenimiento.html">Mantenimiento empleados</a>
+        <a href="comunicacion.html">Usuarios</a>
+        <a href="ayuda.html">Ayuda</a>
+    </nav>
+    
+    <h2 style="text-align: center;">
+        REGISTRO DE DATOS - PERSONAL TECNICO<br>
+        <output style="font-size:x-small;">(*) Campos obligatorios.</output>
+    </h2>
+    <div class="container">
+        <form id="forma">
+        <table width="200" id="one-column-emphasis">
+            <tr>
+                <td class="oce-first">
+                    Nombre (s): (*)
+                </td>
+                <td>
+                    <input style="width: 200px;" class="default" type="text" 
+                           id="nombre" placeholder="Nombre (s)"
+                           onfocus="this.select();" aria-required="true"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="oce-first">
+                    Apellidos: (*)
+                </td>
+                <td>
+                    <input style="width: 200px;" class="default" type="apellidos" 
+                           id="apellidos" onfocus="this.select();" placeholder="Apellidos">
+                </td>
+            </tr>
+            <tr>
+                <td class="oce-first">
+                    Tecnolog&iacute;as: (*)
+                </td>
+                <td>
+                    Java <input type="checkbox" name="tecnologias" value=" -java ">
+                    &nbsp;&nbsp;&nbsp;
+                    .Net <input type="checkbox" name="tecnologias" value=" -net">
+                    &nbsp;&nbsp;&nbsp;
+                    Php <input type="checkbox" name="tecnologias" value=" -php">
+                </td>
+            </tr>
+            <tr>
+                <td class="oce-first">
+                    G&eacute;nero: (*)
+                </td>
+                <td>
+                    Hombre<input type="radio" name="genero" value="H">
+                    &nbsp;&nbsp;&nbsp;
+                    Mujer <input type="radio" name="genero" value="M">
+                </td> 
+            </tr>
+            <tr>
+                <td class="oce-first">
+                    Grado de estudios: (*)
+                </td>
+                <td>
+                    <select style="width: 200px;" id="estudios" class="default">
+                        <option value="">Seleccionar</option>
+                        <option value="bachillerato">Bachillerato</option>
+                        <option value="Licenciatura">Licenciatura</option>
+                        <option value="Maestria">Maestr&iacute;a</option>
+                        <option value="Doctorado">Doctorado</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="oce-first">
+                    Experiencia laboral: (*)
+                </td>
+                <td>
+                    S&iacute;<input type="radio" name="experiencia" value="si">
+                    &nbsp;&nbsp;&nbsp;
+                    No <input type="radio" name="experiencia" value="no">
+                </td> 
+            </tr>
+            <tr>
+                <td class="oce-first">
+                    Correo Electr&oacute;nico: (*)
+                </td>
+                <td>
+                    <input style="width: 200px; text-align: center;" type="email" id="correo" placeholder="usuario@server.x.x">
+                </td>
+            </tr>
+            <tr style="text-align:center;">
+                <td>
+                    <input id="limpiarForma" type="reset" value="Limpiar" class="default">
+                </td>
+                <td>
+                    <input id="boton" class="default" type="button" onclick="guardar()" value="Guardar">
+                </td>
+            </tr>
+        </table>
+            <!--</div>-->
+        </form>
+    </div>
+    <h1 style="text-align: center;">
+        PERSONAL TECNICO REGISTRADO<br>
+    </h1>
+
+    <div class="container">
+        <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellidos</th>
+                <th scope="col">Tecnolog&iacute;as que domina</th>
+                <th scope="col">G&eacute;nero</th>
+                <th scope="col">Grado de estudios</th>
+                <th scope="col">Experiencia laboral</th>
+                <th scope="col">Correo electr&oacute;nico</th>
+                <th scope="col">Eliminar</th>
+                <th scope="col">Editar</th>
+              </tr>
+            </thead>
+        <tbody id="tabla" class="table-striped table-bordered">
+                <!--Area donde visualiza la info extraida de la BD-->
+            </tbody>
+          </table>
+    </div>
+    <h1 style="text-align: center;">
+        Sesion en sistema activa &nbsp;&nbsp;
+        <div id="actual"></div><br><br>
+        <button onclick="cerrarSesion()">Cerrar Sesión</button>
+    </h1>
+    <script src="js/mantenimientoPersonal.js"></script>
+    <script src="js/ini.js"></script>
+    <footer style="font-size: small;">&copy; 2020 Navarro Segura Carlos Svein</footer>
+</body>
+</html>

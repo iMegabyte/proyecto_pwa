@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directorio Personal Técnico - Chat usuarios</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!--ESTILOS-->
+    <link rel="stylesheet", href="css/estilos.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/tabla.css">
+     <!--_________________________________CONFIGURACIONES FIREBASE_____________________________-->
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    
+    <script src="/__/firebase/7.7.0/firebase-app.js"></script>
+    <script src="/__/firebase/7.7.0/firebase-auth.js"></script>
+    <script src="/__/firebase/7.7.0/firebase-firestore.js"></script>
+    
+    <script>
+        // TODO: Replace the following with your app's Firebase project configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyBetQG19kY4G6VItzXqvLCroFbH-8ViS6A",
+            authDomain: "directoriopt-12423.firebaseapp.com",
+            databaseURL: "https://directoriopt-12423.firebaseio.com",
+            projectId: "directoriopt-12423",
+            storageBucket: "directoriopt-12423.appspot.com",
+            messagingSenderId: "926534468312",
+            appId: "1:926534468312:web:7645daf9e0f0879c148dad"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <script type="text/javascript">
+        initApp = function () {
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (user) {
+                    // User is signed in.
+                    var displayName = user.displayName;
+                    var email = user.email;
+                    var emailVerified = user.emailVerified;
+                    var photoURL = user.photoURL;
+                    var uid = user.uid;
+                    var phoneNumber = user.phoneNumber;
+                    var providerData = user.providerData;
+                    user.getIdToken().then(function (accessToken) {
+
+                        document.getElementById('actual').textContent = JSON.stringify({
+                            displayName: displayName,
+                            email: email,
+                            emailVerified: emailVerified,
+                            phoneNumber: phoneNumber,
+                            photoURL: photoURL,
+                            uid: uid,
+                            accessToken: accessToken,
+                            providerData: providerData
+                        }, null, '  ');
+                        document.getElementById('actual').textContent = email;
+                    });
+                } else {
+                    // User is signed out.
+                    document.getElementById('actual').textContent = 'Signed out';
+                    document.getElementById('actual').textContent = 'Sign in';
+                    document.getElementById('actual').textContent = 'null';
+                }
+            }, function (error) {
+                console.log(error);
+            });
+        };
+
+        window.addEventListener('load', function () {
+            initApp();
+        });
+    </script>
+</head>
+<body>
+    <nav class="menu-main">
+        <a href="inicio.html">Inicio</a>
+        <a href="mantenimiento.html">Mantenimiento empleados</a>
+        <a class="active" href="comunicacion.html">Usuarios</a>
+        <a href="ayuda.html">Ayuda</a>
+    </nav>
+
+    <h1>Mensajeria</h1>
+    <form>
+      
+    </form>
+    <fieldset>
+        <legend>
+            Historial del mensajes
+        </legend>
+        <div id="mensajes" style="text-align: left;">
+            <li><progress max="100">Cargando…</progress></li>
+        </div>
+    </fieldset>
+    <br>
+    <input id="texto" type="text" required placeholder="Mensaje" onfocus="marcar(this);">
+      <button onclick="agrega()">Enviar</button>
+      <br><br>
+    <h1 style="text-align: center;">
+        Sesion en sistema activa &nbsp;&nbsp;
+        <div id="actual"></div>
+        <button onclick="cerrarSesion();">Cerrar Sesión</button>
+        <button id="limpiarCaja" onclick="limpiar();" hidden>Limpiar</button>
+    </h1>
+    <script src="js/ini.js"></script>
+    <script src="js/chatUsusistema.js"></script>
+    <footer style="font-size: small;">&copy; 2020 Navarro Segura Carlos Svein</footer>
+</body>
+</html>

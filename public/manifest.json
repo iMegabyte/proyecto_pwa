@@ -1,0 +1,15 @@
+{
+    "short_name": "directoriorh",
+    "name": "Directorio Personal Técnico",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#4fc3f7",
+    "theme_color": "#99ccff",
+    "icons": [
+      {
+      "src": "img/icono-256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+      }
+    ]
+  }

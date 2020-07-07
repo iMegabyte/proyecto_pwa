@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#99ccff">
+    <meta http-equiv="Expires" content="0">
+    <link rel="manifest" href="manifest.json">
+    <!-- Color de la barra de navegación de Chrome. -->
+    <meta name="theme-color" content="#ffcb2d">
+
+    <!-- Configuración de la PWA: Chrome y Edge. -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Configuración para Web Clip en Safari. -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" sizes="2048x2048" href="img/icono-2048.png">
+    <link rel="apple-touch-startup-image" sizes="2048x2048" href="img/icono-2048.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <title>Directorio Personal Técnico - Credenciales</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/estilos.css">
+    <!--_________________________________CONFIGURACIONES FIREBASE_____________________________-->
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+
+    <script src="/__/firebase/7.7.0/firebase-app.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+
+    <script src="/__/firebase/7.7.0/firebase-firestore.js"></script>
+    <script src="/__/firebase/7.7.0/firebase-auth.js"></script>
+    <script src="/__/firebase/7.7.0/firebase-storage.js"></script>
+
+    <script>
+        // TODO: Replace the following with your app's Firebase project configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyBetQG19kY4G6VItzXqvLCroFbH-8ViS6A",
+            authDomain: "directoriopt-12423.firebaseapp.com",
+            databaseURL: "https://directoriopt-12423.firebaseio.com",
+            projectId: "directoriopt-12423",
+            storageBucket: "directoriopt-12423.appspot.com",
+            messagingSenderId: "926534468312",
+            appId: "1:926534468312:web:7645daf9e0f0879c148dad"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        
+    </script>
+</head>
+
+<body>
+    <script>
+        //@ts-check - indica a VS Code que valide este script.
+        /* Registra un service worker para instalar la aplicación en el
+         * caché del navegador. No se espera a que termine el registro y pasa a la
+         * siguiente instrucción, que es "let app = firebase.app();". */
+        registraServiceWorker();
+        /** Registra un service worker para instalar la aplicación en el
+         * caché del navegador. */
+        async function registraServiceWorker() {
+            if ("serviceWorker" in navigator) {
+                try {
+                    // Registra el service worker y espera que termine.
+                    const registro = await navigator.serviceWorker.register("/sw.js");
+                    // Registro correcto y se muestra en la consola.
+                    console.log("Service Worker registrado.");
+                    console.log(registro);
+                } catch (e) {
+                    // Hubo un error en el registro.
+                    muestraError(e);
+                }
+            }
+        }
+        /** Procesa una excepción y muestra un mensaje de error.
+         * @param {Error} e descripción del error. */
+        function muestraError(e) {
+            console.log(e);
+            // @ts-ignore
+            mensaje.value = e.message;
+        }
+    </script>
+    <h1>Iniciar sesion en sistema</h1>
+    <input type="email" id="correoSesion" placeholder="Correo electronico" style="text-align: center;">
+    &nbsp;&nbsp;&nbsp;
+    <input type="password" id="contrasenaSesion" placeholder="Contraseña" style="text-align: center;">
+    &nbsp;&nbsp;&nbsp;<button onclick="iniciarSesion()">Iniciar sesion</button><br><br>
+    <a href="javascript:resetPass()">Olvidé mi Contraseña</a>
+    <br><br><br><br>
+    <h1>Registrar usuario en sistema</h1>
+    <input type="email" id="correoRegistro" placeholder="Correo electronico" style="text-align: center;">
+    &nbsp;&nbsp;&nbsp;
+    <input type="password" id="contrasenaRegistro" placeholder="Contraseña 6 carecteres"
+        style="text-align: center;"><br><br>
+    &nbsp;&nbsp;&nbsp;<button onclick="registrar()">Registrar cuenta</button>
+    <br><br><br><br>
+    <script src="js/ini.js"></script>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <footer style="font-size: small;">&copy; 2020 Navarro Segura Carlos Svein</footer>
+
+</body>
+
+</html>

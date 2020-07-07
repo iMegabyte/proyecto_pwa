@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directorio Personal Técnico - Ayuda</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!--ESTILOS-->
+    <link rel="stylesheet" , href="css/estilos.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/acordeon.css">
+
+    <!--_________________________________CONFIGURACIONES FIREBASE_____________________________-->
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    
+    <script src="/__/firebase/7.7.0/firebase-app.js"></script>
+    <script src="/__/firebase/7.7.0/firebase-auth.js"></script>
+    <script src="/__/firebase/7.7.0/firebase-firestore.js"></script>
+    <script>
+        // TODO: Replace the following with your app's Firebase project configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyBetQG19kY4G6VItzXqvLCroFbH-8ViS6A",
+            authDomain: "directoriopt-12423.firebaseapp.com",
+            databaseURL: "https://directoriopt-12423.firebaseio.com",
+            projectId: "directoriopt-12423",
+            storageBucket: "directoriopt-12423.appspot.com",
+            messagingSenderId: "926534468312",
+            appId: "1:926534468312:web:7645daf9e0f0879c148dad"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <script type="text/javascript">
+        initApp = function () {
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (user) {
+                    // User is signed in.
+                    var displayName = user.displayName;
+                    var email = user.email;
+                    var emailVerified = user.emailVerified;
+                    var photoURL = user.photoURL;
+                    var uid = user.uid;
+                    var phoneNumber = user.phoneNumber;
+                    var providerData = user.providerData;
+                    user.getIdToken().then(function (accessToken) {
+
+                        document.getElementById('actual').textContent = JSON.stringify({
+                            displayName: displayName,
+                            email: email,
+                            emailVerified: emailVerified,
+                            phoneNumber: phoneNumber,
+                            photoURL: photoURL,
+                            uid: uid,
+                            accessToken: accessToken,
+                            providerData: providerData
+                        }, null, '  ');
+                        document.getElementById('actual').textContent = email;
+                    });
+                } else {
+                    // User is signed out.
+                    document.getElementById('actual').textContent = 'Signed out';
+                    document.getElementById('actual').textContent = 'Sign in';
+                    document.getElementById('actual').textContent = 'null';
+                }
+            }, function (error) {
+                console.log(error);
+            });
+        };
+
+        window.addEventListener('load', function () {
+            initApp();
+        });
+    </script>
+</head>
+
+<body>
+    <nav class="menu-main">
+        <a href="inicio.html">Inicio</a>
+        <a href="mantenimiento.html">Mantenimiento empleados</a>
+        <a href="comunicacion.html">Usuarios</a>
+        <a class="active" href="ayuda.html">Ayuda</a>
+    </nav>
+
+    <button style="text-align: center;" class="accordeon">Funciones de la aplicación</button>
+    <div class="panel">
+        <p>
+            <li>Administración de personal <br>
+            Permite la alta y baja de personal en su negocio, asi como la actualizacion de datos de los mismos.</li>
+            <br>
+            <li>Servicio de mensajes y avisos <br>
+            La aplicación cuenta con una seccion donde los usuarios de la misma, 
+            podran interactuar mediante un nombre de usuario</li>
+        </p>
+    </div>
+
+    <button style="text-align: center;" class="accordeon">Manual de usuario</button>
+    <div class="panel">
+        <p>
+            <p style="font-size: smaller;">
+                *Si el documento no es visualizado, de click en "Ver en ventana externa" y acceda a su cuenta Google
+            </p>
+            <br>
+            <iframe src="https://docs.google.com/viewer?srcid=1WDHc71LiEFU-7iDISO7NvlA5DJJInCFa&pid=explorer&efh=false&a=v&chrome=false&embedded=true" 
+            width="100%" height="680px"></iframe>
+        </p>
+    </div>
+
+    <button style="text-align: center;" class="accordeon">Demo</button>
+    <div class="panel">
+        <p>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/-xmqjJ5TmhA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <br><br>
+            <b>Funcionamiento en tiempo real con diferentes usuarios.</b>
+            <br><br>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/IA4VwggiOYo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </p>
+    </div>
+    <button style="text-align: center;" class="accordeon">Acerca de...</button>
+    <div class="panel">
+        <p>
+            Recursos Humanos - Directorio de personal Técnico Version 1.0 <br>
+            Aplicacion Web Progresiva desarrollada como evidencia para la asignatura "Programación Web" <br>
+            Semestre 2020/2<br>
+            Desarrollador: Navarro Segura Carlos Svein <br>
+            
+        </p>
+    </div>
+
+    <h1 style="text-align: center;">
+        Sesion en sistema activa &nbsp;&nbsp; <br><br>
+        <div id="actual"></div><br><br>
+        <button onclick="cerrarSesion()">Cerrar Sesión</button>
+    </h1>
+    <script src="js/ini.js"></script>
+    <script>
+        var acc = document.getElementsByClassName("accordeon");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                }
+            });
+        }
+    </script><br><br><br><br><br><br>
+    <footer style="font-size: small;">&copy; 2020 Navarro Segura Carlos Svein</footer>
+</body>
+
+</html>
